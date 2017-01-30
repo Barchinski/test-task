@@ -40,21 +40,10 @@ function Symbols () {
         }
     };
 
-    this.zoomIn = function (item) {
+    this.zoomIn = function(item) {
         c.fadeIn(item);
-
-
-        if (item.zoomed === false) {
-            c.scale(item, 1.1, 1.1, 30);
-            setTimeout(function(){
-                return item.zoomed = true;
-            }, 350)
-        } else {
-            c.scale(item, 0.9, 0.9, 30);
-            setTimeout(function(){
-                return item.zoomed = false;
-            }, 350)
-        }
+        //c.breathe(item, 1.1, 1.1, 60);
+        c.wobble(item);
     };
 
     this.zoomOut = function (item) {
@@ -68,6 +57,7 @@ function Symbols () {
         me.symArea.children.forEach(function(item){
             me.zoomIn(item);
         });
+        me.state = 'started';
         me.spin = 'started';
     };
 
@@ -93,10 +83,10 @@ function Symbols () {
 
         setTimeout(function(){
             fireEvent('spinStopping');
-        }, 5000);
+        }, 3000);
         setTimeout(function(){
             fireEvent('checkWin');
-        }, 6000);
+        }, 4500);
 
     };
 
@@ -117,11 +107,7 @@ function Symbols () {
         me.state = 'stopping';
     });
     addListener('checkWin', me.checkWin);
-
-
-
-
-
+    
     this.update = function () {
         if (me.state === 'spinning') {
             me.startSpin();
@@ -129,6 +115,9 @@ function Symbols () {
 
         if (me.state === 'stopping') {
             me.stopSpin();
+        }
+        if (me.state === 'started') {
+
         }
     }
 }
